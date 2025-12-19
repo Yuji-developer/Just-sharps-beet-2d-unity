@@ -4,16 +4,16 @@ using DG.Tweening;
 public class SphereEnemyBehavior : MonoBehaviour
 {
     [Header("�����̐ݒ�")]
-    public Vector2 moveDirection = Vector2.left; // ���ł��������i�����l�͍��j
-    public float moveSpeed = 8f; // �����i�l�p��菭���x���Ă�OK�j
-    public float lifeTime = 6f;   // ���b��ɏ����邩�i�l�p��菭�����߂ł�OK�j
-    public float appearDuration = 0.5f; // �o�����̃A�j���[�V��������
+    public Vector2 moveDirection = Vector2.left; 
+    public float moveSpeed = 8f; 
+    public float lifeTime = 6f;   
+    public float appearDuration = 0.5f; 
 
     private Rigidbody2D rb;
-    private Collider2D col; // �����蔻��p
-    private MeshRenderer mr; // �F�ⓧ���x��ς��邽�߁i3D�I�u�W�F�N�g�Ȃ̂�MeshRenderer�j
+    private Collider2D col; 
+    private MeshRenderer mr; 
 
-    void Awake() // Start��菭�������Ă΂��
+    void Awake() 
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();

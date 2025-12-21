@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections; // Coroutine (IEnumerator) を使うために必要
 using DG.Tweening;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private float dashTimeLeft;
     private float lastDashTime = -10f;  // 最後にダッシュした時間
 
+    public GameObject gameOverObejct;
+
     // === 初期化処理 ===
     void Start()
     {
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
         // ダッシュ中の色変化のために、初期の色を保存しておく
         // (ここではシンプルにするため、Startでは特に何もしません)
+        gameOverObejct.SetActive(false);
     }
 
     // === フレームごとの処理 ===
@@ -103,10 +107,15 @@ public class PlayerController : MonoBehaviour
     {
         // ダッシュ中（isDashing == true）ならダメージを受けない処理をここに書くと本格的になります
         if (isDashing) return;
+        if (!collision.gameObject.CompareTag("Hazard")) return;
+        
 
-        if (collision.gameObject.CompareTag("Hazard"))
-        {
-            Debug.Log("Game Over!");
+        IEnemy enemy = collision.gameObject.GetComponent<IEnemy>();
+        if (enemy.GetEnemyStatus() == EnemyStatus.Inactive) return;
+
+
+        Debug.Log("Game Over!");
+        gameOverObejct.SetActive(true);
             // ここでシーンのリロードや爆発エフェクトなどを呼ぶ
             Destroy(gameObject);
 
@@ -119,7 +128,7 @@ public class PlayerController : MonoBehaviour
             }
             Destroy(gameObject);
         }
-    }
 }
+
 
 

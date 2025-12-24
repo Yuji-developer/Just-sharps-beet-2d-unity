@@ -103,14 +103,14 @@ public class PlayerController : MonoBehaviour
     // === 当たり判定処理 ===
     // 物理的な衝突（Is Triggerにチェックなし）が発生したときに呼ばれる
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
         // ダッシュ中（isDashing == true）ならダメージを受けない処理をここに書くと本格的になります
         if (isDashing) return;
-        if (!collision.gameObject.CompareTag("Hazard")) return;
+        if (!other.gameObject.CompareTag("Hazard")) return;
         
 
-        IEnemy enemy = collision.gameObject.GetComponent<IEnemy>();
+        IEnemy enemy = other.gameObject.GetComponent<IEnemy>();
         if (enemy.GetEnemyStatus() == EnemyStatus.Inactive) return;
 
 
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
             // ここでシーンのリロードや爆発エフェクトなどを呼ぶ
             Destroy(gameObject);
 
-            if (collision.gameObject.CompareTag("Hazard"))
+            if (other.gameObject.CompareTag("Hazard"))
             {
                 if (gameOverUI != null)
                 {

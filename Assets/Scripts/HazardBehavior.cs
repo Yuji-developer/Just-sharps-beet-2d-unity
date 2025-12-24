@@ -7,6 +7,7 @@ public class HazardBehavior : MonoBehaviour, IEnemy
 {
     public float warningTime = 6f; // 警告時間（実体化するまでの時間）
     public float lifeTime = 2f;
+    public float activeateTime = 1f;
 
     private Collider2D col;
     private SpriteRenderer sr;
@@ -19,6 +20,8 @@ public class HazardBehavior : MonoBehaviour, IEnemy
     public IEnumerator ActivateHazard()
     {
         _enemyStatus = EnemyStatus.Inactive;
+        this.gameObject.SetActive(false);
+        yield return new WaitForSeconds(activeateTime);
 
         this.gameObject.SetActive(true);
         col = GetComponent<Collider2D>();
@@ -32,7 +35,9 @@ public class HazardBehavior : MonoBehaviour, IEnemy
         c.a = 0.3f; // 透明度30%
         sr.color = c;
 
-        // 警告時間だけ待つ
+
+        
+        // activeteTime
         yield return new WaitForSeconds(warningTime);
 
         _enemyStatus = EnemyStatus.Active;
